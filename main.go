@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/gustonecrush/api-marvel-database/models"
+	"github.com/gustonecrush/api-marvel-database/controllers/herocontroller"
 )
 
 func main() {
