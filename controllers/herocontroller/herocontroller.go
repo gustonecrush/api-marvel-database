@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gustonecrush/api-marvel-database/helper"
 	"github.com/gustonecrush/api-marvel-database/models"
 	"gorm.io/gorm"
 )
@@ -14,7 +15,7 @@ func Index(c *gin.Context) {
 	var heroes []models.Hero
 
 	models.DB.Find(&heroes)
-	c.JSON(http.StatusOK, gin.H{"heroes": heroes})
+	helper.SendResponse(c, "Successfully Get Hero", heroes)
 
 }
 
