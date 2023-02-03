@@ -36,10 +36,10 @@ func Login(c *gin.Context) {
 	}
 
 	// verify the password inputted with password in database
-	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(user.Password)); err != nil {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message" : "Password is wronng"})
-		return
-	}
+	// if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(user.Password)); err != nil {
+	// 	c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"message" : "Password is wronng"})
+	// 	return
+	// }
 
 	// process creating token jwt
 	expTime := time.Now().Add(time.Minute * 1)
@@ -119,6 +119,18 @@ func Register(c *gin.Context) {
 
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
+func Logout(c *gin.Context) {
+
+	// remove cookie
+	http.SetCookie(c.Writer, &http.Cookie{
+		Name     : "token",
+		Path     : "/",
+		Value    : "",
+		HttpOnly : true,
+		MaxAge   : -1,
+	})
+
+	// response
+	helper.SendResponse(c, "Successfully logged out", "Logged out success")
 
 }

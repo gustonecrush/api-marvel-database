@@ -22,6 +22,7 @@ func main() {
 	// endpoints auth
 	r.POST("/api/register", authcontroller.Register)
 	r.POST("/api/login", authcontroller.Login)
+	r.GET("/api/logout", authcontroller.Logout)
 
 	// r := mux.NewRouter()
 
