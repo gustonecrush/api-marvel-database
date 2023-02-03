@@ -9,12 +9,24 @@ import (
 	"gorm.io/gorm"
 )
 
-func Index(c *gin.Context) {
+// func Index(c *gin.Context) {
+
+// 	var heroes []models.Hero
+
+// 	models.DB.Find(&heroes)
+// 	c.JSON(http.StatusOK, gin.H{"heroes": heroes})
+
+// }
+
+func Index(w http.ResponseWriter, r *http.Request) {
 
 	var heroes []models.Hero
-	
 	models.DB.Find(&heroes)
-	c.JSON(http.StatusOK, gin.H{"heroes": heroes})
+
+	response, _ := json.Marshal(map[string]any{"heroes": heroes})
+	w.Header().Add("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	w.Write(response)
 
 }
 
