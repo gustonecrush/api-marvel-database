@@ -52,6 +52,21 @@ func Create(c *gin.Context) {
 }
 
 func Update(c *gin.Context) {
+
+	var hero models.Hero
+	id := c.Param("id")
+
+	if err := c.ShouldBindJSON(&hero); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	if models.DB.Model(&hero).Where("id = ?", id).Updates(&hero).RowsAffected == 0 {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": "Update Hero Failed"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"hero": "Data Hero Updated"})
 	
 }
 
