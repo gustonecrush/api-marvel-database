@@ -38,6 +38,16 @@ func Show(c *gin.Context) {
 }
 
 func Create(c *gin.Context) {
+
+	var hero models.Hero
+
+	if err := c.ShouldBindJSON(&hero); err != nil {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	models.DB.Create(&hero)
+	c.JSON(http.StatusOK, gin.H{"hero": hero})
 	
 }
 
