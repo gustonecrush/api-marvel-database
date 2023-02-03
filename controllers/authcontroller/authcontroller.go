@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
-	"golang.org/x/crypto/bcrypt"
+
 	"github.com/gustonecrush/api-marvel-database/models"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -31,6 +32,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		log.Fatal("Failed to register")
 	}
 
+	// create response 
 	response, _ := json.Marshal(map[string]string{"message": "Success to register"})
 	w.Header().Add("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)

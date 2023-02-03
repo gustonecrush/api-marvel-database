@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
+	// "github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
 	"github.com/gustonecrush/api-marvel-database/controllers/authcontroller"
 	"github.com/gustonecrush/api-marvel-database/controllers/herocontroller"
@@ -13,24 +13,26 @@ import (
 
 func main() {
 
-	r := gin.Default()
+	// r := gin.Default()
 	models.ConnectDatabase()
 
 	// endpoints hero
 	// r.GET("/api/heroes", herocontroller.Index)
-	r.GET("/api/heroes/:id", herocontroller.Show)
-	r.POST("/api/heroes", herocontroller.Create)
-	r.PUT("/api/heroes/:id", herocontroller.Update)
-	r.DELETE("/api/heroes", herocontroller.Delete)
+	// r.GET("/api/heroes/:id", herocontroller.Show)
+	// r.POST("/api/heroes", herocontroller.Create)
+	// r.PUT("/api/heroes/:id", herocontroller.Update)
+	// r.DELETE("/api/heroes", herocontroller.Delete)
 
 	// endpoints auth
-	auth := mux.NewRouter()
+	r := mux.NewRouter()
 
-	auth.HandleFunc("/api/heroes", herocontroller.Index).Methods("GET")
-	auth.HandleFunc("/api/login", authcontroller.Login).Methods("POST")
-	auth.HandleFunc("/api/register", authcontroller.Register).Methods("POST")
-	auth.HandleFunc("/api/logout", authcontroller.Logout).Methods("POST")
+	r.HandleFunc("/api/heroes", herocontroller.Index).Methods("GET")
+	r.HandleFunc("/api/heroes/{id}", herocontroller.Show).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8080", auth))
+	r.HandleFunc("/api/login", authcontroller.Login).Methods("POST")
+	r.HandleFunc("/api/register", authcontroller.Register).Methods("POST")
+	r.HandleFunc("/api/logout", authcontroller.Logout).Methods("POST")
+
+	log.Fatal(http.ListenAndServe(":8080", r))
 
 }
